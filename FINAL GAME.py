@@ -112,12 +112,12 @@ location="base"
 option="null"
 tutorial=True
 
-def say(dialouge, sec):
+def say(dialogue, sec):
 	def print_slow(str, time):
 		for c in str + '\n':
 			sys.stdout.write(c)
 			sys.stdout.flush()
-			time.sleep(3./90)
+			wait(3./90)
 		print_slow(str)
 		wait(time)
 	print_slow(dialogue, sec)
@@ -436,7 +436,7 @@ def rand_encounters():
 				else:
 				    say("Invalid input! Please enter A or B.", 1)
 				
-				elif location == "farm":
+		elif location == "farm":
 				    say("A pale warrior is sharpening his blades near the crops.", 1)
 				    if sidequest_status["kratos"] == "complete":
 				        say("You wave at each other.", 1)
@@ -813,134 +813,134 @@ def fighting():
 		enemy_act = random.randint(1, 5)
 		if enemy_act <= 3:
 			Engy=min(Engy+2,max_Engy)
-def enemy_ai():
-	global option
-	nonlocal Blk_chance, F_HP, HP, Engy, max_Engy, DMG, max_HP, max_EHP, E_dmg
-
-	if enemy == "fish":
-		boss_ai()
-		return
-
-	enemy_act = random.randint(1, 5)
-	if enemy_act <= 3:
-		Engy = min(Engy + 2, max_Engy)
-		say(f"The {enemy} attacks!")
-		if option == "C":
-			say("But you dodged it!")
-			option = "null"
-			return			
-		block = random.randint(1, Blk_chance)
-		if block == 1:
-			say("But you blocked it!")
-		else:
-			say("You were hit!")
-			HP -= E_dmg  
-		option = "null"
-	elif enemy_act == 4:
-		Engy = min(Engy + 2, max_Engy)
-		if F_HP < max_EHP:
-			say(f"The {enemy} heals!")
-			F_HP = min(F_HP + E_heal[enemy], max_EHP)
-		else:
-			say(f"The {enemy} stands still.")  
-		option = "null"
-	else:
-		Engy = min(Engy + 2, max_Engy)
-		if option == "A":
-			enemy_block = random.randint(1, 25)
-			if enemy_block == 1:
-				say(f"The {enemy} blocked your attack!")
-				F_HP += DMG
-			else:
-				say(f"The {enemy} tried dodging your attack and failed.")
-			option = "null"
-		else:
-			say(f"The {enemy} does nothing.")
-
-if tutorial:
-	tutorial_fight()
-	return
-
-say(f"The {enemy} surprises you!")
-
-while True:
-	if HP < 1:
-		lose_cutscene()
-	option = fight_options()
-
-	if option == "A":
-		if Engy < 4:
-			say("You don't have enough energy!")
-			fight_options()
-		else:
-			say(f"You strike the {enemy}!")
-			Engy -= 4
-			F_HP -= DMG
-			if F_HP <= 0:
-				say(f"You defeated the {enemy}!")
-				Player_Stats["enemies killed"] += 1
-				drop_loot()
-				return
-			enemy_ai()
-
-	elif option == "B":
-		while True:
-			if len(Bag) <= 0:
-				say("You have nothing in your bag!")
-				break
-			elif HP == max_HP and Engy == max_Engy:
-				say("You don't need to use anything right now!")
-				break
-			else:
-				say("You open your bag.")
-				open_bag()
-				say("[X] Close bag")
-				item_sel = input("--> ").lower()
-				wait(1)
-				if item_sel == "x":
-					break
-
-				if item_sel in Bag:
-					if Bag[item_sel]["type"] == "HP":
-						if HP == max_HP:
-							say("You don't need to heal.")
-						else:
-							if item_sel == "full heal":
-								HP = max_HP
-							else:
-								HP += int(Bag[item_sel]["effect"])
-								HP = min(HP, max_HP)
-
-					elif Bag[item_sel]["type"] == "Energy":
-						if Engy == max_Engy:
-							say("You don't need energy.")
-						else:
-							Engy += int(Bag[item_sel]["effect"])
-							Engy = min(Engy, max_Engy)
-
-					say(f"Used {item_sel}.")
-					Bag[item_sel]["amount"] -= 1
-
-					if Bag[item_sel]["amount"] == 0:
-						del Bag[item_sel]
-					break
-
-	elif option == "C":
-		say("You prepare to block...")
-		Engy = min(Engy + 2, max_Engy)
-		enemy_ai()
-
-	elif option == "D":
-		say("You try to run away...")
-		time.sleep(1.5)
-		if random.randint(1, 5) == 1:
-			say("You ran away!")
+	def enemy_ai():
+		global option
+		nonlocal Blk_chance, F_HP, HP, Engy, max_Engy, DMG, max_HP, max_EHP, E_dmg
+	
+		if enemy == "fish":
+			boss_ai()
 			return
+	
+		enemy_act = random.randint(1, 5)
+		if enemy_act <= 3:
+			Engy = min(Engy + 2, max_Engy)
+			say(f"The {enemy} attacks!")
+			if option == "C":
+				say("But you dodged it!")
+				option = "null"
+				return			
+			block = random.randint(1, Blk_chance)
+			if block == 1:
+				say("But you blocked it!")
+			else:
+				say("You were hit!")
+				HP -= E_dmg  
+			option = "null"
+		elif enemy_act == 4:
+			Engy = min(Engy + 2, max_Engy)
+			if F_HP < max_EHP:
+				say(f"The {enemy} heals!")
+				F_HP = min(F_HP + E_heal[enemy], max_EHP)
+			else:
+				say(f"The {enemy} stands still.")  
+			option = "null"
 		else:
-			say("But you failed!")
-		enemy_ai()
-	else:
-		say("Invalid option.")
+			Engy = min(Engy + 2, max_Engy)
+			if option == "A":
+				enemy_block = random.randint(1, 25)
+				if enemy_block == 1:
+					say(f"The {enemy} blocked your attack!")
+					F_HP += DMG
+				else:
+					say(f"The {enemy} tried dodging your attack and failed.")
+				option = "null"
+			else:
+				say(f"The {enemy} does nothing.")
+	
+	if tutorial:
+		tutorial_fight()
+		return
+	
+	say(f"The {enemy} surprises you!")
+	
+	while True:
+		if HP < 1:
+			lose_cutscene()
+		option = fight_options()
+	
+		if option == "A":
+			if Engy < 4:
+				say("You don't have enough energy!")
+				fight_options()
+			else:
+				say(f"You strike the {enemy}!")
+				Engy -= 4
+				F_HP -= DMG
+				if F_HP <= 0:
+					say(f"You defeated the {enemy}!")
+					Player_Stats["enemies killed"] += 1
+					drop_loot()
+					return
+				enemy_ai()
+	
+		elif option == "B":
+			while True:
+				if len(Bag) <= 0:
+					say("You have nothing in your bag!")
+					break
+				elif HP == max_HP and Engy == max_Engy:
+					say("You don't need to use anything right now!")
+					break
+				else:
+					say("You open your bag.")
+					open_bag()
+					say("[X] Close bag")
+					item_sel = input("--> ").lower()
+					wait(1)
+					if item_sel == "x":
+						break
+	
+					if item_sel in Bag:
+						if Bag[item_sel]["type"] == "HP":
+							if HP == max_HP:
+								say("You don't need to heal.")
+							else:
+								if item_sel == "full heal":
+									HP = max_HP
+								else:
+									HP += int(Bag[item_sel]["effect"])
+									HP = min(HP, max_HP)
+	
+						elif Bag[item_sel]["type"] == "Energy":
+							if Engy == max_Engy:
+								say("You don't need energy.")
+							else:
+								Engy += int(Bag[item_sel]["effect"])
+								Engy = min(Engy, max_Engy)
+	
+						say(f"Used {item_sel}.")
+						Bag[item_sel]["amount"] -= 1
+	
+						if Bag[item_sel]["amount"] == 0:
+							del Bag[item_sel]
+						break
+	
+		elif option == "C":
+			say("You prepare to block...")
+			Engy = min(Engy + 2, max_Engy)
+			enemy_ai()
+	
+		elif option == "D":
+			say("You try to run away...")
+			time.sleep(1.5)
+			if random.randint(1, 5) == 1:
+				say("You ran away!")
+				return
+			else:
+				say("But you failed!")
+			enemy_ai()
+		else:
+			say("Invalid option.")
 
 	
 def gameplay():
