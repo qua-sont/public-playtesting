@@ -38,14 +38,14 @@ Bag = {
 E_str = {
 	"shadow": 15,
 	"hobo": 15,
-	"karen": 20,
+	"karen": 15,
 	"animatronic": 25,
 	"freddy fazbear": 30,
 	"farmer": 10,
-	"bull": 5,
-	"Otis": 30,
-	"spider horde": 25,
-	"cave goblin": 30,
+	"bull": 20,
+	"Otis": 25,
+	"spider horde": 15,
+	"cave goblin": 20,
 	"muffet":40,
 	"fish":[25,35,50]
 }
@@ -118,7 +118,6 @@ def say(dialogue, sec):
 			sys.stdout.write(c)
 			sys.stdout.flush()
 			wait(3./90)
-		print_slow(str)
 		wait(time)
 	print_slow(dialogue, sec)
 
@@ -173,7 +172,11 @@ def opening_cutscene():
 	global option
 	def house_options():
 		say("\nI should get ready for school, what should I do?",1)
-		say("---------------------------------\n[A] eat breakfast\n[B] take a shower\n[C] wear something proper\n[D] leave for school")
+		print("---------------------------------\n"  
+			+ "[A] Eat breakfast\n"  
+			+ "[B] Take a shower\n"  
+			+ "[C] Wear something proper\n"  
+			+ "[D] Leave for school")
 		return input("-->  ").upper()
 	while True:
 		option = house_options()
@@ -251,15 +254,15 @@ def title_screen():
 
 	def title_options():
 		if tutorial:
-			say("\nWELCOME TO FEVER DREAM", 1)
-			print("[A] start game")
-			print("[B] credits")
-			print("[X] exit")
+			say("\nWELCOME TO FEVER DREAM",1)
+			print("[A] Start game\n"  
+				+ "[B] Credits\n"  
+				+ "[X] Exit")
 		else:
 			say("\nWELCOME TO FEVER DREAM", 1)
-			print("[A] continue game")
-			print("[B] credits")
-			print("[X] exit")
+			print("[A] Continue game\n"  
+				+ "[B] Credits\n"  
+				+ "[X] Exit")
 		return input("-->  ").upper()
 
 	while True:
@@ -284,10 +287,10 @@ def menu():
 	global bells
 	while True:
 		say("\nPAUSED", 1)
-		say("[A] Resume Game", 1)
-		say("[B] Check Stats", 1)
-		say("[C] Random Hint", 1)
-		say("[X] Exit to Title Screen", 1)
+		print("[A] Resume Game\n"  
+			+ "[B] Check Stats\n"  
+			+ "[C] Random Hint\n"  
+			+ "[X] Exit to Title Screen")
 		menu_option = input("-->  ").upper()
 
 		if menu_option == "A":
@@ -313,8 +316,8 @@ def rand_encounters():
 			say("You see a little boy crying in the aisle.", 1)
 			say("Mister, have you seen my mommy?", 1)
 			while True:
-				say("[A] Help him find his mother", 1)
-				say("[B] Ignore him and move on", 1)
+				print("[A] Help him find his mother\n"  
+					+ "[B] Ignore him and move on")
 				choice = input("--> ").upper()
 				wait(1)
 				if choice == "A":
@@ -340,8 +343,8 @@ def rand_encounters():
 		elif location == "scrapyard":
 			say("A figure is running towards you.", 1)
 			while True:
-				say("[A] Ask where he's going", 1)
-				say("[B] Ignore him and move on", 1)
+				print("[A] Ask where he's going\n"  
+					+ "[B] Ignore him and move on")
 				choice = input("--> ").upper()
 				wait(1)
 				if choice == "A":
@@ -365,8 +368,8 @@ def rand_encounters():
 			say("A sickly man coughs as he approaches you.", 1)
 			say("Sick Man: Do you have any medicine...?", 1)
 			while True:
-				say("[A] Try to help him", 1)
-				say("[B] Walk away quickly", 1)
+				print("[A] Try to help him\n"  
+					+ "[B] Walk away quickly")
 				choice = input("--> ").upper()
 				wait(1)
 				if choice == "A":
@@ -387,8 +390,8 @@ def rand_encounters():
 				say("You wave at each other.", 1)
 				return
 			while True:
-				say("[A] Offer him a baby formula", 1)
-				say("[B] Ignore him and continue shopping", 1)
+				print("[A] Offer him a baby formula\n"  
+					+ "[B] Ignore him and continue shopping")
 				choice = input("--> ").upper()
 				wait(1)
 				if choice == "A":
@@ -410,8 +413,8 @@ def rand_encounters():
 		elif location == "scrapyard":
 			say("You see a knight from the Crusades inspecting a pile of scrap.", 1)
 			while True:
-				say("[A] Give him 5 scrap", 1)
-				say("[B] Leave him be", 1)
+				print("[A] Give him 5 scrap\n"  
+					+ "[B] Leave him be")
 				choice = input("--> ").upper()
 				time.sleep(1)
 				if choice == "A":
@@ -437,43 +440,42 @@ def rand_encounters():
 				    say("Invalid input! Please enter A or B.", 1)
 				
 		elif location == "farm":
-				    say("A pale warrior is sharpening his blades near the crops.", 1)
-				    if sidequest_status["kratos"] == "complete":
-				        say("You wave at each other.", 1)
-				        return
-				    while True:
-				        say("[A] Offer him a Heineken", 1)
-				        say("[B] Leave him alone", 1)
-				        choice = input("--> ").upper()
-				        time.sleep(1)
-				        if choice == "A":
-				            if "heineken" in Loot_Bag:
-				                del Loot_Bag["heineken"]
-				                say("He grunts in approval and strengthens your weapon. \n+5 DMG", 1)
-				                Player_Stats["DMG"] += 5
-				                sidequest_status["kratos"] = "complete"
-				            else:
-				                say("You don't have a Heineken!", 1)
-				                say("He gestures for you to leave.", 1)
-				            break
-				        elif choice == "B":
-				            say("You keep your distance and continue exploring.", 1)
-				            break
-				        else:
-				            say("Invalid input! Please enter A or B.", 1)
+			say("A pale warrior is sharpening his blades near the crops.", 1)
+			if sidequest_status["kratos"] == "complete":
+				say("You wave at each other.", 1)
+				return
+			while True:
+				print("[A] Offer him a Heineken\n"  
+					+ "[B] Leave him alone")
+				choice = input("--> ").upper()
+				time.sleep(1)
+				if choice == "A":
+					if "heineken" in Loot_Bag:
+						del Loot_Bag["heineken"]
+						say("He grunts in approval and strengthens your weapon. \n+5 DMG", 1)
+						Player_Stats["DMG"] += 5
+						sidequest_status["kratos"] = "complete"
+					else:
+						say("You don't have a Heineken!", 1)
+						say("He gestures for you to leave.", 1)
+					break
+				elif choice == "B":
+					say("You keep your distance and continue exploring.", 1)
+					break
+				else:
+					say("Invalid input! Please enter A or B.", 1)
 
 def shop():
 	def buy():
 		global bells, max_Space
 		while True:
-			say(f"\nbells: {bells}", 1)
-			say("--------SHOP--------", 1)
-			say("[A] apple - 15 bells", 1)
-			say("[B] energy drink - 15 bells", 1)
-			say("[C] baby formula - 25 bells", 1)
-			say("[D] full heal - 50 bells", 1)
-			say("[E] heineken - 100 bells (ON SALE!!)", 1)
-			say("[X] exit", 1)
+			say(f"\nbells: {bells}\n--------SHOP--------", 1)
+			print("[A] Apple - 15 bells\n"  
+				+ "[B] Energy drink - 15 bells\n"  
+				+ "[C] Baby formula - 25 bells\n"  
+				+ "[D] Full heal - 50 bells\n"  
+				+ "[E] Heineken - 100 bells (ON SALE!!)\n"  
+				+ "[X] Exit")
 			choice = input("-->  ").upper()
 
 			if choice == "X":
@@ -516,8 +518,8 @@ def shop():
 			say(f"\nbells: {bells}", 1)
 			say("--------SHOP--------", 1)
 			for item in Bag:
-				say(f"{item} ({Bag[item]['amount']}): {Consumable_info[item]['sell price']} bells", 1)
-			say("[X] exit", 1)
+				print(f"{item} ({Bag[item]['amount']}): {Consumable_info[item]['sell price']} bells")
+			print("[X] exit")
 			sell_choice = input("--> ").lower()
 			if sell_choice == "x":
 				break
@@ -533,9 +535,9 @@ def shop():
 
 	while True:
 		say("\nTom Nook: Welcome to my shop!", 1)
-		say("[A] buy items", 1)
-		say("[B] sell items", 1)
-		say("[X] leave shop", 1)
+		print("[A] buy items")
+		print("[B] sell items")
+		print("[X] leave shop")
 		dialogue_choice = input("-->  ").upper()
 		if dialogue_choice == "A":
 			buy()
@@ -555,17 +557,17 @@ def open_bag():
 	for item, data in Bag.items():
 		if data["type"] == "HP":
 			if item == "full heal":
-				say(f"{item}(s): {data['amount']}", 1)
-				say(f"Heals {Player_Stats['HP']} {data['type']}", 1)
+				print(f"{item}(s): {data['amount']}")
+				print(f"Heals {Player_Stats['HP']} {data['type']}")
 			else:
-				say(f"{item}(s): {data['amount']}", 1)
-				say(f"Restores {data['effect']}", 1)
+				print(f"{item}(s): {data['amount']}")
+				print(f"Restores {data['effect']}")
 	
 	say("\nEnergy items", 1)
 	for item, data in Bag.items():
 		if data["type"] == "Energy":
-			say(f"{item}(s): {data['amount']}", 1)
-			say(f"Restores {data['effect']} {data['type']}", 1)
+			print(f"{item}(s): {data['amount']}")
+			print(f"Restores {data['effect']} {data['type']}")
 
 def fighting():
 	global option, item_sel, enemy, tutorial
@@ -591,44 +593,44 @@ def fighting():
 		global option, item_sel, enemy, tutorial
 		nonlocal HP, Engy, max_HP, max_Engy, F_HP, max_EHP, DMG, E_dmg
 
-		say(f"A shadowy figure appears... ")
-
+		say(f"A shadowy figure appears... ", 1)
+	
 		# **Basic Attack Tutorial**
-		say("Hint: Try attacking! (Press 'A')")
+		say("Hint: Try attacking! (Press 'A')", 1)
 		while True:
 			option = fight_options()
 			if option == "A":
-				say(f"You strike the {enemy}!")
+				say(f"You strike the {enemy}!", 1)
 				Engy -= 4  # Energy deduction
 				F_HP -= DMG
 				break
 			else:
-				say("Hint: You should attack.")
-
+				say("Hint: You should attack.", 1)
+	
 		# **Enemy Counterattack**
-		say(f"The {enemy} strikes back!")
+		say(f"The {enemy} strikes back!", 1)
 		HP -= E_dmg
-		say("Hint: After every round, you restore 2 energy.")
+		say("Hint: After every round, you restore 2 energy.", 1)
 		Engy = min(Engy + 2, max_Engy)
-
+	
 		# **Dodge Tutorial**
-		say("\nHint: The enemy is attacking, try dodging! (Press 'C')")
+		say("\nHint: The enemy is attacking, try dodging! (Press 'C')", 1)
 		while True:
 			option = fight_options()
 			if option == "C":
-				say(f"The {enemy} attacks...")
-				say("But you dodged it!")
+				say(f"The {enemy} attacks...", 1)
+				say("But you dodged it!", 1)
 				Engy = min(Engy + 2, max_Engy)
 				break
 			else:
-				say("Hint: You should dodge.")
-
+				say("Hint: You should dodge.", 1)
+	
 		# **Healing Tutorial**
-		say("Hint: You're injured, try healing using an item (Press 'B')")
+		say("Hint: You're injured, try healing using an item (Press 'B')", 1)
 		while True:
 			option = fight_options()
 			if option == "B":
-				say("You open your bag:")
+				say("You open your bag:", 1)
 				open_bag()
 				while True:
 					item_sel = input("Use -->  ").lower()
@@ -636,59 +638,59 @@ def fighting():
 						if Bag[item_sel]["type"] == "HP":
 							HP += int(Bag[item_sel]["effect"])  # Ensure healing is an integer
 							HP = min(HP, max_HP)  # Prevent overhealing
-							say(f"Used {item_sel}.")
+							say(f"Used {item_sel}.", 1)
 							Bag[item_sel]["amount"] -= 1
 							if Bag[item_sel]["amount"] == 0:
 								del Bag[item_sel]  # Remove item if used up
 							break
 						else:
-							say("Hint: That item isn't for healing.")
+							say("Hint: That item isn't for healing.", 1)
 					else:
-						say("Hint: Type the exact item name.")
+						say("Hint: Type the exact item name.", 1)
 				break
 			else:
-				say("Hint: You should heal.")
-
+				say("Hint: You should heal.", 1)
+	
 		# **Finishing the Fight**
-		say("Hint: Finish off the enemy!")
+		say("Hint: Finish off the enemy!", 1)
 		Engy = min(Engy + 2, max_Engy)
-
+	
 		while F_HP > 0:
 			option = fight_options()
-
+	
 			if option == "A":
 				Engy -= 4
-				say(f"You strike the {enemy}!")
+				say(f"You strike the {enemy}!", 1)
 				Engy = min(Engy + 2, max_Engy)
 				F_HP -= DMG
 				if F_HP <= 0:
 					break
 				if random.randint(1, 2) == 1:
-					say(f"The {enemy} heals itself!")
+					say(f"The {enemy} heals itself!", 1)
 					F_HP = min(F_HP + E_heal[enemy], max_EHP)
 				else:
-					say(f"the {enemy} does nothing")
+					say(f"the {enemy} does nothing", 1)
 			elif option == "B":
-				say("Hint: There are no more tutorial items, try another option.")
-
+				say("Hint: There are no more tutorial items, try another option.", 1)
+	
 			elif option == "C":
-				say(f"You hesitate...")
+				say(f"You hesitate...", 1)
 				Engy = min(Engy + 2, max_Engy)
 				if random.randint(1, 2) == 1:
-					say(f"The {enemy} heals itself!")
+					say(f"The {enemy} heals itself!", 1)
 					F_HP = min(F_HP + E_heal[enemy], max_EHP)
 				else:
-					say("you both do nothing")
-
+					say("you both do nothing", 1)
+	
 			elif option == "D":
-				say("Hint: You cannot run in the tutorial.")
-
-		say(f"\nYou defeated the {enemy}!")
-		say(f"The {enemy} dropped a sword!")
-		say("Obtained sword! \n+5 DMG!")
+				say("Hint: You cannot run in the tutorial.", 1)
+	
+		say(f"\nYou defeated the {enemy}!", 1)
+		say(f"The {enemy} dropped a sword!", 1)
+		say("Obtained sword! \n+5 DMG!", 1)
 		Player_Stats["DMG"] += 5
 		tutorial = False
-		time.sleep(3)
+		wait(3)
 		return
 	
 	def drop_loot():
@@ -700,7 +702,7 @@ def fighting():
 			global bells
 			if random.randint(1, 2) == 1:
 				M_drop = random.randint(1, 25)
-				say(f"the {enemy} also dropped {M_drop} bells!")
+				say(f"the {enemy} also dropped {M_drop} bells!", 1)
 				bells += M_drop
 		
 		global max_Space
@@ -714,7 +716,7 @@ def fighting():
 			item = random.choice(Loot[enemy])
 			if item in Consumable_info:
 				if bag_check() >= max_Space:
-					say(f"you leave the {item} because you have no space")
+					say(f"you leave the {item} because you have no space", 1)
 					cash_drop()
 					return
 				if item in Bag:
@@ -729,21 +731,21 @@ def fighting():
 					Loot_Bag[item] += 1
 				else:
 					Loot_Bag[item] = 1
-			say(f"You received a {item}!")
+			say(f"You received a {item}!", 1)
 			cash_drop()
 			
 	def fight_options():
 		nonlocal HP, Engy, F_HP
 		global option
 		option = "null"
-		say("\nYour HP:", HP)
-		say("Your Energy:", Engy)
-		say("Enemy HP:", F_HP)
-		say("----------------------------")
-		say("[A] Strike: 4 energy")
-		say("[B] Use item")
-		say("[C] Dodge")
-		say("[D] Run")
+		print("\nYour HP:", HP, "\n"  
+			+ "Your Energy:", Engy, "\n"  
+			+ "Enemy HP:", F_HP, "\n"  
+			+ "----------------------------\n"  
+			+ "[A] Strike: 4 energy\n"  
+			+ "[B] Use item\n"  
+			+ "[C] Dodge\n"  
+			+ "[D] Run")
 		return input("--> ").upper()
 		
 	def boss_ai():
@@ -755,54 +757,47 @@ def fighting():
 		enemy_act = random.randint(1, 5)
 		if enemy_act == 1:
 			Engy = min(Engy + 2, max_Engy)
-			say(f"The {enemy} slaps you!")
+			say(f"The {enemy} slaps you!", 1)
 			if option == "C":
-				say("But you dodged it!")
-				option = "null"
+				say("But you dodged it!", 1)
 				return            
 			block = random.randint(1, Blk_chance)
 			if block == 1:
-				say("But you blocked it!")
+				say("But you blocked it!", 1)
 			else:
-				say("You were hit!")
+				say("You were hit!", 1)
 				HP -= B_atk1   
-			option = "null"
 		elif enemy_act == 2:
-			say(f"The {enemy} spawns a tsunami!")
+			say(f"The {enemy} spawns a tsunami!", 1)
 			Engy = min(Engy + 2, max_Engy)
 			if option == "C":
-				say("But you dodged it!")
-				option = "null"
+				say("But you dodged it!", 1)
 				return            
 			block = random.randint(1, Blk_chance)
 			if block == 1:
-				say("But you blocked it!")
+				say("But you blocked it!", 1)
 			else:
-				say("You were hit!")
+				say("You were hit!", 1)
 				HP -= B_atk2
-			option = "null"
 		elif enemy_act == 3:
-			say(f"The {enemy} bites you!")
+			say(f"The {enemy} bites you!", 1)
 			Engy = min(Engy + 2, max_Engy)
 			if option == "C":
-				say("But you dodged it!")
-				option = "null"
+				say("But you dodged it!", 1)
 				return            
 			block = random.randint(1, Blk_chance)
 			if block == 1:
-				say("But you blocked it!")
+				say("But you blocked it!", 1)
 			else:
-				say("You were hit!")
+				say("You were hit!", 1)
 				HP -= B_atk3
-			option = "null"
 		elif enemy_act == 2:
 			Engy = min(Engy + 2, max_Engy)
 			if F_HP < max_EHP:
-				say(f"The {enemy} heals!")
+				say(f"The {enemy} heals!", 1)
 				F_HP = min(F_HP + E_heal[enemy], max_EHP)
 		else:
-			say(f"The {enemy} flops around.")  
-			option = "null"
+			say(f"The {enemy} flops around.", 1)  
 			
 	def enemy_ai():
 		global option
@@ -812,7 +807,8 @@ def fighting():
 			return
 		enemy_act = random.randint(1, 5)
 		if enemy_act <= 3:
-			Engy=min(Engy+2,max_Engy)
+			Engy = min(Engy + 2, max_Engy)
+
 	def enemy_ai():
 		global option
 		nonlocal Blk_chance, F_HP, HP, Engy, max_Engy, DMG, max_HP, max_EHP, E_dmg
@@ -824,44 +820,40 @@ def fighting():
 		enemy_act = random.randint(1, 5)
 		if enemy_act <= 3:
 			Engy = min(Engy + 2, max_Engy)
-			say(f"The {enemy} attacks!")
+			say(f"The {enemy} attacks!", 1)
 			if option == "C":
-				say("But you dodged it!")
-				option = "null"
+				say("But you dodged it!", 1)
 				return			
 			block = random.randint(1, Blk_chance)
 			if block == 1:
-				say("But you blocked it!")
+				say("But you blocked it!", 1)
 			else:
-				say("You were hit!")
+				say("You were hit!", 1)
 				HP -= E_dmg  
-			option = "null"
 		elif enemy_act == 4:
 			Engy = min(Engy + 2, max_Engy)
 			if F_HP < max_EHP:
-				say(f"The {enemy} heals!")
+				say(f"The {enemy} heals!", 1)
 				F_HP = min(F_HP + E_heal[enemy], max_EHP)
 			else:
-				say(f"The {enemy} stands still.")  
-			option = "null"
+				say(f"The {enemy} stands still.", 1)  
 		else:
 			Engy = min(Engy + 2, max_Engy)
 			if option == "A":
 				enemy_block = random.randint(1, 25)
 				if enemy_block == 1:
-					say(f"The {enemy} blocked your attack!")
+					say(f"The {enemy} blocked your attack!", 1)
 					F_HP += DMG
 				else:
-					say(f"The {enemy} tried dodging your attack and failed.")
-				option = "null"
+					say(f"The {enemy} tried dodging your attack and failed.", 1)
 			else:
-				say(f"The {enemy} does nothing.")
+				say(f"The {enemy} does nothing.", 1)
 	
 	if tutorial:
 		tutorial_fight()
 		return
 	
-	say(f"The {enemy} surprises you!")
+	say(f"The {enemy} surprises you!",1)
 	
 	while True:
 		if HP < 1:
@@ -870,14 +862,14 @@ def fighting():
 	
 		if option == "A":
 			if Engy < 4:
-				say("You don't have enough energy!")
+				say("You don't have enough energy!", 1)
 				fight_options()
 			else:
-				say(f"You strike the {enemy}!")
+				say(f"You strike the {enemy}!", 1)
 				Engy -= 4
 				F_HP -= DMG
 				if F_HP <= 0:
-					say(f"You defeated the {enemy}!")
+					say(f"You defeated the {enemy}!", 1)
 					Player_Stats["enemies killed"] += 1
 					drop_loot()
 					return
@@ -886,15 +878,15 @@ def fighting():
 		elif option == "B":
 			while True:
 				if len(Bag) <= 0:
-					say("You have nothing in your bag!")
+					say("You have nothing in your bag!", 1)
 					break
 				elif HP == max_HP and Engy == max_Engy:
-					say("You don't need to use anything right now!")
+					say("You don't need to use anything right now!", 1)
 					break
 				else:
-					say("You open your bag.")
+					say("You open your bag.", 1)
 					open_bag()
-					say("[X] Close bag")
+					say("[X] Close bag", 1)
 					item_sel = input("--> ").lower()
 					wait(1)
 					if item_sel == "x":
@@ -903,7 +895,7 @@ def fighting():
 					if item_sel in Bag:
 						if Bag[item_sel]["type"] == "HP":
 							if HP == max_HP:
-								say("You don't need to heal.")
+								say("You don't need to heal.", 1)
 							else:
 								if item_sel == "full heal":
 									HP = max_HP
@@ -913,12 +905,12 @@ def fighting():
 	
 						elif Bag[item_sel]["type"] == "Energy":
 							if Engy == max_Engy:
-								say("You don't need energy.")
+								say("You don't need energy.", 1)
 							else:
 								Engy += int(Bag[item_sel]["effect"])
 								Engy = min(Engy, max_Engy)
 	
-						say(f"Used {item_sel}.")
+						say(f"Used {item_sel}.", 1)
 						Bag[item_sel]["amount"] -= 1
 	
 						if Bag[item_sel]["amount"] == 0:
@@ -926,22 +918,21 @@ def fighting():
 						break
 	
 		elif option == "C":
-			say("You prepare to block...")
+			say("You prepare to block...", 1)
 			Engy = min(Engy + 2, max_Engy)
 			enemy_ai()
 	
 		elif option == "D":
-			say("You try to run away...")
-			time.sleep(1.5)
+			say("You try to run away...", 1)
+			wait(1.5)
 			if random.randint(1, 5) == 1:
-				say("You ran away!")
+				say("You ran away!", 1)
 				return
 			else:
-				say("But you failed!")
+				say("But you failed!", 1)
 			enemy_ai()
 		else:
-			say("Invalid option.")
-
+			say("Invalid option.", 1)
 	
 def gameplay():
 	global location
@@ -950,23 +941,23 @@ def gameplay():
 		while True:
 			if location == "base":
 				say("\nWhat will you do?", 1)
-				say("----------------------------", 1)
-				say("[A] Talk to weaponsmith", 1)
-				say("[B] Talk to armorsmith", 1)
-				say("[C] Talk to Tom Nook", 1)
-				say("[D] Talk to your crush", 1)
-				say("[E] Talk to Gandalf", 1)
-				say("[F] Check loot", 1)
-				say("[G] Go somewhere else", 1)
-				say("[X] Open menu", 1)
+				print("----------------------------\n"
+					+ "[A] Talk to weaponsmith\n"
+					+ "[B] Talk to armorsmith\n"
+					+ "[C] Talk to Tom Nook\n"
+					+ "[D] Talk to your crush\n"
+					+ "[E] Talk to Gandalf\n"
+					+ "[F] Check loot\n"
+					+ "[G] Go somewhere else\n"
+					+ "[X] Open menu")
 			else:
 				say("\nWhat will you do?", 1)
-				say("----------------------------", 1)
-				say(f"[A] Explore {location}", 1)
-				say("[B] Go somewhere else", 1)
-				say("[C] Open bag", 1)
-				say("[D] Check loot", 1)
-				say("[X] Open menu", 1)
+				print("----------------------------\n"
+					+ f"[A] Explore {location}\n"
+					+ "[B] Go somewhere else\n"
+					+ "[C] Open bag\n"
+					+ "[D] Check loot\n"
+					+ "[X] Open menu")
 
 			option = input("--> ").upper()
 			if option in ["A", "B", "C", "D", "E", "F", "G", "X"]:
@@ -976,15 +967,15 @@ def gameplay():
 	def travel_menu():
 		while True:
 			say("\nWhere will you go?", 1)
-			say("----------------------------", 1)
-			say("[A] Supermarket", 1)
-			say("[B] Scrapyard", 1)
-			say("[C] Farm", 1)
-			say("[D] Base", 1)
-			say("[X] Do something else", 1)
+			print("----------------------------\n"
+				+ "[A] Supermarket\n"
+				+ "[B] Scrapyard\n"
+				+ "[C] Farm\n"
+				+ "[D] Base\n"
+				+ "[X] Do something else")
 
 			travel_option = input("--> ").upper()
-			time.sleep(1)
+			wait(1)
 			global location
 			past_location = location
 
@@ -1018,9 +1009,9 @@ def gameplay():
 				else:
 					say("\nWeaponsmith: I can upgrade your sword for 5 scrap", 1)
 					while True:
-						say("[A] 'I have 5 scrap!'", 1)
-						say("[B] 'Where do I find scrap?'", 1)
-						say("[C] 'Nevermind'", 1)
+						print("[A] 'I have 5 scrap!'\n"  
+							+ "[B] 'Where do I find scrap?'\n"  
+							+ "[C] 'Nevermind'")
 						dialogue_choice = input("--> ").upper()
 						if dialogue_choice == "A":
 							if "scrap" not in Loot_Bag or Loot_Bag["scrap"] <= 5:
@@ -1049,9 +1040,9 @@ def gameplay():
 				else:
 					say("\nArmorsmith: I can make you some armor for 3 scrap and 5 leather", 1)
 					while True:
-						say("[A] 'I have 3 scrap and 5 leather!'", 1)
-						say("[B] 'Where do I find scrap and leather?'", 1)
-						say("[C] 'Nevermind'", 1)
+						print("[A] 'I have 3 scrap and 5 leather!'\n"  
+							+ "[B] 'Where do I find scrap and leather?'\n"  
+							+ "[C] 'Nevermind'")
 						dialogue_choice = input("--> ").upper()
 						if dialogue_choice == "A":
 							if "scrap" not in Loot_Bag or "leather" not in Loot_Bag:
@@ -1083,9 +1074,9 @@ def gameplay():
 
 			elif option == "C":
 				while True:
-					say("\nTom Nook: Feel free to buy or sell anything at my shop!", 1)
-					say("[A] Open shop", 1)
-					say("[B] Walk away", 1)
+					print("\nTom Nook: Feel free to buy or sell anything at my shop!\n"
+						+ "[A] Open shop\n"
+						+ "[B] Walk away")
 					dialogue_choice = input("--> ").upper()
 					if dialogue_choice == "A":
 						shop()
@@ -1103,9 +1094,9 @@ def gameplay():
 				else:
 					while True:
 						say("\nCrush: Do you have chocolates for me?", 1)
-						say("[A] 'Sure!'", 1)
-						say("[B] 'Where do I find chocolates?'", 1)
-						say("[C] 'Nah'", 1)
+						print("[A] 'Sure!'"
+							+ "[B] 'Where do I find chocolates?'"
+							+ "[C] 'Nah'", 1)
 						dialogue_choice = input("--> ").upper()
 						if dialogue_choice == "A":
 							if "chocolates" not in Loot_Bag:
@@ -1130,8 +1121,8 @@ def gameplay():
 					if quest_status["weaponsmith"] == "complete":
 						say("\nGandalf: Ah, I see you have strengthened your sword. Your first task is to find a map at the farm.", 1)
 						while True:
-							say("[A] 'I'll find it!'", 1)
-							say("[B] 'Maybe later.'", 1)
+							print("[A] 'I'll find it!'\n"  
+								+ "[B] 'Maybe later.'")
 							dialogue_choice = input("--> ").upper()
 							if dialogue_choice == "A":
 								say("Gandalf: Good! Return to me once you have the map.", 1)
@@ -1157,8 +1148,8 @@ def gameplay():
 					if quest_status["armorsmith"] == "complete":
 						say("\nGandalf: You are ready for this next task, but are you ready for the foes you will fight within?", 1)
 						while True:
-							say("[A] 'I am ready'", 1)
-							say("[B] 'I'll do this later'", 1)
+							print("[A] 'I am ready'\n"  
+								+ "[B] 'I'll do this later'")
 							dialogue_choice = input("--> ").upper()
 							if dialogue_choice == "A":
 								say("Gandalf: Very well, I shall bring you there.", 1)
@@ -1187,8 +1178,8 @@ def gameplay():
 					if quest_status["crush"] == "complete":
 						say("Gandalf: You have gained the strength you need, but are you prepared to come with me to fix this?", 1)
 						while True:
-							say("[A] 'Let's do this!'", 1)
-							say("[B] 'Let me gather my thoughts first'", 1)
+							print("[A] 'Let's do this!'\n"  
+								+ "[B] 'Let me prepare first'")
 							dialogue_choice = input("--> ").upper()
 							if dialogue_choice == "A":
 								say("Gandalf: Very well, let us set off to the rift zone to patch the rift and fix this mess.", 1)
@@ -1224,7 +1215,7 @@ def gameplay():
 						fighting()
 					elif event == 5:
 						if random.randint(1, 3) == 1:
-							rand_encounters(location)
+							rand_encounters()
 					if location == "supermarket" and quest_status["crush"] == "incomplete":
 						if random.randint(1, 15) == 1 and "chocolates" not in Loot_Bag:
 							say("You found chocolates!", 1)
