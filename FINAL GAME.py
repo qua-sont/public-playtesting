@@ -308,12 +308,11 @@ def menu():
 
 def rand_encounters():
 	global bells,location
-	say("")
 	encounter_type = random.choice(["positive", "negative"])
 
 	if encounter_type == "negative":
 		if location == "supermarket":
-			say("You see a little boy crying in the aisle.", 1)
+			say("\nYou see a little boy crying in the aisle.", 1)
 			say("Mister, have you seen my mommy?", 1)
 			while True:
 				print("[A] Help him find his mother\n"  
@@ -341,7 +340,7 @@ def rand_encounters():
 					say("Invalid input! Please enter A or B.", 1)
 
 		elif location == "scrapyard":
-			say("A figure is running towards you.", 1)
+			say("\nA figure is running towards you.", 1)
 			while True:
 				print("[A] Ask where he's going\n"  
 					+ "[B] Ignore him and move on")
@@ -365,7 +364,7 @@ def rand_encounters():
 					say("Invalid input! Please enter A or B.", 1)
 
 		elif location == "farm":
-			say("A sickly man coughs as he approaches you.", 1)
+			say("\nA sickly man coughs as he approaches you.", 1)
 			say("Sick Man: Do you have any medicine...?", 1)
 			while True:
 				print("[A] Try to help him\n"  
@@ -385,7 +384,7 @@ def rand_encounters():
 
 	else:  # Positive encounter
 		if location == "supermarket":
-			say("You spot a gangster carrying a baby.", 1)
+			say("\nYou spot a gangster carrying a baby.", 1)
 			if sidequest_status["yakuza"] == "complete":
 				say("You wave at each other.", 1)
 				return
@@ -411,7 +410,7 @@ def rand_encounters():
 					say("Invalid input! Please enter A or B.", 1)
 
 		elif location == "scrapyard":
-			say("You see a knight from the Crusades inspecting a pile of scrap.", 1)
+			say("\nYou see a knight from the Crusades inspecting a pile of scrap.", 1)
 			while True:
 				print("[A] Give him 5 scrap\n"  
 					+ "[B] Leave him be")
@@ -440,7 +439,7 @@ def rand_encounters():
 				    say("Invalid input! Please enter A or B.", 1)
 				
 		elif location == "farm":
-			say("A pale warrior is sharpening his blades near the crops.", 1)
+			say("\nA pale warrior is sharpening his blades near the crops.", 1)
 			if sidequest_status["kratos"] == "complete":
 				say("You wave at each other.", 1)
 				return
@@ -468,6 +467,7 @@ def rand_encounters():
 def shop():
 	def buy():
 		global bells, max_Space
+		bulk=0
 		while True:
 			say(f"\nbells: {bells}\n--------SHOP--------", 1)
 			print("[A] Apple - 15 bells\n"  
@@ -476,10 +476,6 @@ def shop():
 				+ "[D] Full heal - 50 bells\n"  
 				+ "[E] Heineken - 100 bells (ON SALE!!)\n"  
 				+ "[X] Exit")
-			choice = input("-->  ").upper()
-
-			if choice == "X":
-				return  # Exit buy menu
 
 			items = {
 				"A": ("apple", 15),
@@ -487,26 +483,54 @@ def shop():
 				"C": ("baby formula", 25),
 				"D": ("full heal", 50),
 				"E": ("heineken", 100)
-			}
+				}
+
+			choice = input("-->  ").upper()
+			if choice == "X":
+				return  # Exit buy menu
+
 			if choice in items:
 				item, cost = items[choice]
-				if bag_check() >= max_Space:
-					say("you have no more space in your bag", 1)
-					return
-				if bells >= cost:
-					say(f"bought {item}", 1)
-					bells -= cost
+				if item not in Loot_Bag:
+					if bag_check() >= max_Space:
+					say("You have no more space in your bag", 1)
+					continue
+				else:
+					bells-=cost
+					Loot_Bag[item]=1
+					say(f"You received... a {item}?")
+
+				while True:
+					try:
+						bulk = int(input("How many will you buy?\n"))
+						if bulk == 0:
+							say("You decided to not buy the item", 1)
+							return
+						if bag_check() + bulk > max_Space:
+							rem_spaces = max_Space - bag_check()
+							say(f"You only have {rem_spaces} spaces left in your bag", 1)
+						else:
+							break
+					except ValueError:
+						say("Invalid input! Enter a number.", 1)
+
+				total_price = cost * bulk
+				if bells >= total_price:
+					bells -= total_price
 					if item in Consumable_info:
 						if item in Bag:
-							Bag[item]["amount"] += 1
+							Bag[item]["amount"] += bulk
 						else:
-							Bag[item] = {"type": Consumable_info[item]["type"], "amount": 1, "effect": Consumable_info[item]["restoration"]}
+							if item =="full heal":
+								Bag[item]={"type": Consumable_info[item]["type"], "amount": bulk}
+							else:
+									Bag[item]={"type":Consumable_info[item]["type"], "amount": bulk, "effect": Consumable_info[item]["restoration"]}
 					else:
 						if item in Loot_Bag:
 							say(f"Tom Nook: I'm afraid I have no more {item} in stock", 1)
 						else:
 							Loot_Bag[item] = 1
-					say(f"You received a {item}!", 1)
+					say(f"You received {bulk} {item}(s)!", 1)
 				else:
 					say("Not enough bells!", 1)
 			else:
@@ -525,13 +549,22 @@ def shop():
 				break
 			else:
 				if sell_choice in Bag:
-					say(f"sold {sell_choice}", 1)
-					bells += Consumable_info[sell_choice]["sell price"]
-					Bag[sell_choice]["amount"] -= 1
-					if Bag[sell_choice]["amount"] == 0:
-						del Bag[sell_choice]
-				else:
-					say("you don't have that item", 1)
+					while True:
+						try:
+							bulk = int(input("How many will you sell?\n"))
+							if bulk > Bag[sell_choice]["amount"]:
+								say(f"You only have {Bag[sell_choice]['amount']} {sell_choice}(s)", 1)
+							else:
+								break
+						except ValueError:
+							say("Invalid input! Enter a number.", 1)
+						say(f"sold {bulk} {sell_choice}", 1)
+						bells += Consumable_info[sell_choice]["sell price"]* bulk
+						Bag[sell_choice]["amount"] -= bulk
+						if Bag[sell_choice]["amount"] == 0:
+							del Bag[sell_choice]
+					else:
+						say("you don't have that item", 1)
 
 	while True:
 		say("\nTom Nook: Welcome to my shop!", 1)
