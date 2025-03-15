@@ -128,35 +128,35 @@ def say(dialogue, sec):
 
 def lose_cutscene():
 	say("you died...", 1)
-	say("...but you hear a noise", 1)
-	say("beep... beep.... beep...", 1)
-	say(f"{Name}: Oh no! I'm gonna be late for school!", 1)
-	say(f"{Name}: I should've never stayed up playing road blocks!", 1)#
+	say("...but you hear a noise", 0.5)
+	say("beep... beep.... beep...", 0.5)
+	say(f"{Name}: Oh no! I'm gonna be late for school!", 0.5)
+	say(f"{Name}: I should've never stayed up playing road blocks!", 0.5)#
 	say("GAME OVER", 1)
 	exit(0)
 
 
 def final_cutscene():
-	say("the fish flops on the floor.", 1)#
-	say("a bright light goes off", 1)
-	say("beep... beep.... beep...", 1)
-	say("you wake up, without a headache this time...", 1)#
-	say(f"{Name}: It was all a dream?", 1)#
-	say("you get ready for school. still thinking about them...", 1)#
-	say("the end", 1)
+	say("the fish flops on the floor.", 0.5)#
+	say("a bright light goes off", 0.5)
+	say("beep... beep.... beep...", 0.5)
+	say("you wake up, without a headache this time...", 0.5)#
+	say(f"{Name}: It was all a dream?", 0.5)#
+	say("you get ready for school. still thinking about them...", 0.5)#
+	say("the end", 0.5)
 	exit(0)
 
 def boss_cutscene():
 	global location
-	say("you explore the rift zone...", 1)
-	say("but something is... off", 1)
-	say("the world distorts and your friends disappear", 1)
-	say("the faint sound of a bell thrashes your mind", 1)
-	say("then it hits you.", 1)
-	say("this isn't real. it never was.", 1)
-	say("you have to wake up.", 1)
-	say("you rush to patch the rift to wake yourself up when suddenly...", 1)
-	say("you are washed away by a tide!", 1)
+	say("you explore the rift zone...", 0.5)
+	say("but something is... off", 0.5)
+	say("the world distorts and your friends disappear", 0.5)
+	say("the faint sound of a bell thrashes your mind", 0.5)
+	say("then it hits you.", 0.5)
+	say("this isn't real. it never was.", 0.5)
+	say("you have to wake up.", 0.5)
+	say("you rush to patch the rift to wake yourself up when suddenly...", 0.5)
+	say("you are washed away by a tide!", 0.5)
 	location = "rift zone"
 	fighting()
 
@@ -201,7 +201,7 @@ def opening_cutscene():
 		if option == "D":
 			say("you leave for school", 1)
 			break
-	say("you go outside your house to go to school", 1)
+	say("you go outside your house to go to school", 0.5)
 	say("a figure approaches...", 0.5)
 	fighting()  # Make sure the fighting function is defined elsewhere
 	say(f"{Name}: Whoah a sword!", 0.5)
@@ -216,30 +216,30 @@ def opening_cutscene():
 	if choice == "Y":
 		say("you carefully walk up to the bush...", 0.5)
 		say("something jumps at you!", 0.5)
-		say("???: (Animal crossing chat noises)", 1)#
-		say("you freeze before uttering the words...", 1.5)
+		say("???: (Animal crossing chat noises)", 0.5)#
+		say("you freeze before uttering the words...", 1)
 		say(f"{Name}: Tom Nook?!? ", 0.5)
 		say("Tom Nook: Who else would it be? Now tell me where everyone went before I increase your debt!", 0.5)
 		say(f"{Name}: But how? You're not even real!", 0.5)
-		say("Tom Nook: What do you mean 'not real'? That's impossible!", 1)
+		say("Tom Nook: What do you mean 'not real'? That's impossible!", 0.5)
 		say("How can I be fake if there's others like me?", 0.5)
-		say(f"{Name}: There's more of you?", 1)
+		say(f"{Name}: There's more of you?", 0.5)
 		say("Tom Nook: Follow me! I'll show you where they are!", 0.5)
 	elif choice == "N":
 		say("you ignore the sounds", 0.5)
 		say("you hear tiny steps!", 0.5)
-		say("you try to turn, but!", 2)
-		say("a bag is placed over your head", 1)
+		say("you try to turn, but!", 1)
+		say("a bag is placed over your head", 0.5)
 		say(f"{Name}: Who are you!?!", 0.5)
 		say("???: (Animal crossing noises)", 0.5)#
 		say(f"{Name}: Mayor?! Are you Tom Nook?!?", 0.5)
-		say("Tom Nook: The one and only!", 1)
+		say("Tom Nook: The one and only!", 0.5)
 		say("you lift the bag off your head", 0.5)
 		say(f"{Name}: Why did you try to kidnap me?", 0.5)
 		say("Tom Nook: The others wanted me to bring you back because they need your help", 1)
 		say(f"{Name}: There's others?", 0.5)
 		say("Tom Nook: Follow me and I will show you!", 0.5)
-	say("you arrive at the base", 2)
+	say("you arrive at the base", 0.5)
 	say("Tom Nook: You can talk to the people here, they can help boost you and possibly help you fix this mess!", 0.5)
 	return
 
@@ -253,12 +253,12 @@ def title_screen():
 
 	def title_options():
 		if tutorial:
-			say("\nWELCOME TO FEVER DREAM",1)
+			say("\nWELCOME TO FAMILIARITY",1)
 			print("[A] Start game\n"  
 				+ "[B] Credits\n"  
 				+ "[X] Exit")
 		else:
-			say("\nWELCOME TO FEVER DREAM", 1)
+			say("\nWELCOME TO FAMILIARITY", 1)
 			print("[A] Continue game\n"  
 				+ "[B] Credits\n"  
 				+ "[X] Exit")
@@ -360,11 +360,11 @@ def rand_encounters():
 					say("You step aside and avoid him.", 0.5)
 					break
 				else:
-					say("Invalid input! Please enter A or B.", 1)
+					say("Invalid input! Please enter A or B.", 0.5)
 
 		elif location == "farm":
-			say("A sickly man coughs as he approaches you.", 1)
-			say("Sick Man: You sir, do you have medicine for an old man like me...?", 1)#
+			say("A sickly man coughs as he approaches you.", 0.5)
+			say("Sick Man: You sir, do you have medicine for an old man like me...?", 0.5)#
 			while True:
 				print("[A] Try to help him\n"  
 					+ "[B] Walk away quickly")
@@ -379,11 +379,11 @@ def rand_encounters():
 					say("You avoid him and move on.", 0.5)
 					break
 				else:
-					say("Invalid input! Please enter A or B.", 1)
+					say("Invalid input! Please enter A or B.", 0.5)
 
 	else:  # Positive encounter
 		if location == "supermarket":
-			say("You spot a gangster carrying a baby. Looking for something?", 1)
+			say("You spot a gangster carrying a baby. Looking for something?", 0.5)
 			if sidequest_status["yakuza"] == "complete":
 				say("You wave and he greets you.", 0.5)
 				return
@@ -406,10 +406,10 @@ def rand_encounters():
 					say("You walk past him without a second thought.", 0.5)
 					break
 				else:
-					say("Invalid input! Please enter A or B.", 1)
+					say("Invalid input! Please enter A or B.", 0.5)
 
 		elif location == "scrapyard":
-			say("You see a knight from the Crusades resting with a broken sword and armour plate.", 1)#
+			say("You see a knight from the Crusades resting with a broken sword and armour plate.", 0.5)#
 			while True:
 				print("[A] Give him 5 scrap\n"  
 					+ "[B] Leave him be")
@@ -420,7 +420,7 @@ def rand_encounters():
 				        Loot_Bag["scrap"] -= 5
 				        if Loot_Bag["scrap"] < 1:
 				            del Loot_Bag["scrap"]
-				        say("Crusader: Thank you, kind traveler. Here, have my Holy Water.\n+1 full heal", 1)
+				        say("Crusader: Thank you, kind traveler. Here, have my Holy Water.\n+1 full heal", 0.5)
 				        say(f"{Name}: This is a full hea-", 0.5)#
 				        say("Before you finish he runs off chasing a hobo for conversion.", 0.5)#
 				        if "full heal" in Bag:
@@ -435,10 +435,10 @@ def rand_encounters():
 				    say("You let him be and continue exploring.", 0.5)
 				    break
 				else:
-				    say("Invalid input! Please enter A or B.", 1)
+				    say("Invalid input! Please enter A or B.", 0.5)
 				
 		elif location == "farm":
-			say("A pale warrior is holding an empty heineken near the crops. he seems dissapointed.", 1)#
+			say("A pale warrior is holding an empty heineken near the crops. he seems dissapointed.", 0.5)#
 			if sidequest_status["kratos"] == "complete":
 				say("You wave and he nods.", 0.5)#
 				return
@@ -941,7 +941,7 @@ def fighting():
 								Engy += int(Bag[item_sel]["effect"])
 								Engy = min(Engy, max_Engy)
 	
-						say(f"Used {item_sel}.", 1)
+						say(f"Used {item_sel}.", 0.5)
 						Bag[item_sel]["amount"] -= 1
 	
 						if Bag[item_sel]["amount"] == 0:
@@ -1049,7 +1049,7 @@ def gameplay():
 						dialogue_choice = input("--> ").upper()
 						if dialogue_choice == "A":
 							if "scrap" not in Loot_Bag or Loot_Bag["scrap"] <= 5:
-								say("You don't have enough scrap!", 1)
+								say("You don't have enough scrap!", 0.5)
 							else:
 								say("Weaponsmith: Here's your new sword, pal!\n+5 DMG", 0.5)
 								Player_Stats["DMG"] += 5
@@ -1059,7 +1059,7 @@ def gameplay():
 								quest_status["weaponsmith"] = "complete"
 							break
 						elif dialogue_choice == "B":
-							say("Scrap can be found in the scrapyard or as a random drop from dirty hobos.", 1)#
+							say("Scrap can be found in the scrapyard or as a random drop from dirty hobos.", 0.5)#
 							break
 						elif dialogue_choice == "C":
 							say("You walk away.", 0.5)
@@ -1099,7 +1099,7 @@ def gameplay():
 									quest_status["armorsmith"] = "complete"
 								break
 						elif dialogue_choice == "B":
-							say("Scrap can be found at the scrapyard, while leather can be found at the farm. Hobos have a chance of dropping either item though.", 1)
+							say("Scrap can be found at the scrapyard, while leather can be found at the farm. Hobos have a chance of dropping either item though.", 0.5)
 							break
 						elif dialogue_choice == "C":
 							say("You walk away.", 0.5)
@@ -1172,7 +1172,7 @@ def gameplay():
 			
 				elif quest_status["gandalf"] == "map quest":
 					if Loot_Bag["map"] > 0:
-						say("\nGandalf: Ah, you found the map! But you are still too vulnerable. You must upgrade your armor.", 1)
+						say("\nGandalf: Ah, you found the map! But you are still too vulnerable. You must upgrade your armor.", 0.5)
 						del Loot_Bag["map"]
 						quest_status["gandalf"] = "armor requirement"
 					else:
@@ -1180,7 +1180,7 @@ def gameplay():
 			
 				elif quest_status["gandalf"] == "armor requirement":
 					if quest_status["armorsmith"] == "complete":
-						say("\nGandalf: You are ready for this next task, but are you ready for the foes you will fight within?", 1)
+						say("\nGandalf: You are ready for this next task, but are you ready for the foes you will fight within?", 0.5)
 						while True:
 							print("[A] 'I am ready'\n"  
 								+ "[B] 'I'll do this later'")
@@ -1202,7 +1202,7 @@ def gameplay():
 			
 				elif quest_status["gandalf"] == "artifact quest":
 					if Loot_Bag["artifact"] > 0:
-						say("\nGandalf: You have returned with the artifact. But you must be even stronger for the final challenge.", 1)
+						say("\nGandalf: You have returned with the artifact. But you must be even stronger for the final challenge.", 0.5)
 						del Loot_Bag["artifact"]
 						quest_status["gandalf"] = "health requirement"
 					else:
@@ -1210,13 +1210,13 @@ def gameplay():
 			
 				elif quest_status["gandalf"] == "health requirement":
 					if quest_status["crush"] == "complete":
-						say("Gandalf: You have gained the strength you need, but are you prepared to come with me to fix this?", 1)
+						say("Gandalf: You have gained the strength you need, but are you prepared to come with me to fix this?", 0.5)
 						while True:
 							print("[A] 'Let's do this!'\n"  
 								+ "[B] 'Let me prepare first'")
 							dialogue_choice = input("--> ").upper()
 							if dialogue_choice == "A":
-								say("Gandalf: Very well, let us set off to the rift zone to patch the rift and fix this mess.", 1)
+								say("Gandalf: Very well, let us set off to the rift zone to patch the rift and fix this mess.", 0.5)
 								say("You and the whole group journey to the rift zone.", 0.5)
 								boss_cutscene()
 								break
@@ -1226,7 +1226,7 @@ def gameplay():
 							else:
 								say("Invalid choice! Please select A or B.", 0.5)
 					else:
-						say("\nGandalf: You are not yet strong enough. Perhaps there is someone who can make you stronger?", 1)
+						say("\nGandalf: You are not yet strong enough. Perhaps there is someone who can make you stronger?", 0.5)
 
 			elif option == "F":
 				for item, amount in Loot_Bag.items():
