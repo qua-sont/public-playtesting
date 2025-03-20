@@ -20,7 +20,7 @@ quest_status={"weaponsmith":"incomplete",
 }
 
 Player_Stats = {"HP": 80, "Armor": 10, "DMG": 15, "Energy": 20,"enemies killed":0}
-bells=500000
+bells=0
 
 Consumable_info = {
 	"apple": {"type": "HP", "restoration": "15","sell price":10},
@@ -32,15 +32,14 @@ Consumable_info = {
 Loot_Bag={}
 Bag = {
 	"apple": {"type": Consumable_info["apple"]["type"], "amount": 1, "effect": Consumable_info["apple"]["restoration"]},
-	"full heal":{"type":Consumable_info["full heal"]["type"],"amount":1}
 }
 
 E_str = {
 	"shadow": 15,
 	"hobo": 15,
 	"karen": 15,
-	"animatronic": 25,
-	"freddy fazbear": 30,
+	"animatronic": 20,
+	"freddy fazbear": 25,
 	"farmer": 10,
 	"bull": 20,
 	"Otis": 25,
@@ -89,7 +88,7 @@ Loot = {
 	"bull":["leather","beef"],
 	"Otis":  ["leather","beef","leather"],
 	"spider horde":["apple","energy drink"],
-	"cave goblin":["apple","energy drink"],
+	"cave goblin":["apple","energy drink","artifact"],
 	"muffet":["artifact","apple","energy drink","full heal"]
 }
 
@@ -103,7 +102,6 @@ enemies = {
 Block_chance = {10: 25, 15: 20, 20: 10}
 
 max_Space=10
-Encounter = False
 enemy = "shadow"
 option = "null"
 item_sel = "null"
@@ -186,30 +184,31 @@ def opening_cutscene():
 				Player_Stats["HP"] += 20
 			else:
 				say("you already ate breakfast", 0.5)
-		if option == "B":
+		elif option == "B":
 			if Player_Stats["Energy"] < 30:
 				say("you take a shower", 1)
 				Player_Stats["Energy"] += 10
 			else:
 				say("you already took a shower", 0.5)
-		if option == "C":
+		elif option == "C":
 			if Player_Stats["Armor"] < 15:
 				say("you wear proper uniform", 0.5)
 				Player_Stats["Armor"] += 5
 			else:
 				say("you already wore your uniform", 0.5)
-		if option == "D":
+		elif option == "D":
 			say("you leave for school", 1)
 			break
+		else:
+			say("Invalid Input!",.5)
 	say("you go outside your house to go to school", 0.5)
 	say("a figure approaches...", 0.5)
 	fighting()  # Make sure the fighting function is defined elsewhere
 	say(f"{Name}: Whoah a sword!", 0.5)
 	say("you store the sword in your rather spacious bag", 1)
 	say(f"{Name}: how can a sword fit in my ba-", 0.5)#
-	say("you're cut off by a rustling in the bushes...", 0.4)
+	say("you're cut off by a rustling in the bushes...", 0.5)
 	choice = input("approach the bush? (y/n) \n").upper()
-	wait(1)
 	while choice not in ["Y", "N"]:
 		say("not an option, please try again", 0.5)
 		choice = input("approach the bush? (y/n) \n").upper()
@@ -231,8 +230,8 @@ def opening_cutscene():
 		say("you try to turn, but!", 1)
 		say("a bag is placed over your head", 0.5)
 		say(f"{Name}: Who are you!?!", 0.5)
-		say("???: (Animal crossing noises)", 0.5)#
-		say(f"{Name}: Mayor?! Are you Tom Nook?!?", 0.5)
+		say("???: (Animal crossing noises)", 0.5)
+		say(f"{Name}:  Are you Tom Nook?!?", 0.5)
 		say("Tom Nook: The one and only!", 0.5)
 		say("you lift the bag off your head", 0.5)
 		say(f"{Name}: Why did you try to kidnap me?", 0.5)
@@ -247,9 +246,9 @@ def opening_cutscene():
 def title_screen():
 	global option, Name, tutorial
 	def credits():
-		say("\nLead Developer \nAndre Quimpo", 1)
-		say("\nCo-Developers \nJacob Garganza \nAenon Magabat", 1)
-		say("\nPlaytesters \nAlonzo Pahilanga\n", 1)
+		say("\nLead Developer \nAndre Quimpo", .5)
+		say("\nCo-Developers \nJacob Garganza \nAenon Magabat", .5)
+		say("\nPlaytesters \nAlonzo Pahilanga\nAmara Perez\n", .5)
 
 	def title_options():
 		if tutorial:
@@ -273,19 +272,19 @@ def title_screen():
 				opening_cutscene()  # Assuming this is defined elsewhere
 				return
 			else:
-				menu()  # Assuming this is defined elsewhere
+				return  # Assuming this is defined elsewhere
 		elif option == "B":
 			credits()  # Assuming this is defined elsewhere
 		elif option == "X":
 			say("leaving game...", 1)
 			exit(0)
 		else:
-			print("invalid input")
+			say("Invalid Input!",.5)
 	
 def menu():
 	global bells
 	while True:
-		say("\nPAUSED", 1)
+		say("\nPAUSED", .5)
 		print("[A] Resume Game\n"  
 			+ "[B] Check Stats\n"  
 			+ "[C] Random Hint\n"  
@@ -293,16 +292,16 @@ def menu():
 		menu_option = input("-->  ").upper()
 
 		if menu_option == "A":
-			gameplay()  # Resumes game
+			return # Resumes game
 		elif menu_option == "B":
 			for key, value in Player_Stats.items():
 				print(f"{key}: {value}")
 		elif menu_option == "C":
-			say(random.choice(hints), 1)
+			say(random.choice(hints), .5)
 		elif menu_option == "X":
 			title_screen()  # Returns to title screen
 		else:
-			say("Invalid input, try again.", 1)
+			say("Invalid input, try again.", .5)
 
 
 def rand_encounters():
@@ -317,7 +316,6 @@ def rand_encounters():
 				print("[A] Help him find his mother\n"  
 					+ "[B] Ignore him and move on")
 				choice = input("--> ").upper()
-				wait(1)
 				if choice == "A":
 					say("As you help Timmy, a wild Karen appears!", 0.5)
 					say("Karen: Why are you talking to my child?!", 0.5)
@@ -329,7 +327,7 @@ def rand_encounters():
 							say(f"Karen: Wowww, you don't even have 25 bells.\n-{bells} bells", 0.5)
 							bells = 0
 					else:
-						say(f"Karen: That should be a lesson for you! loser!\n-{bells} bells", 0.5)#
+						say(f"Karen: That should be a lesson for you! loser!\n-25 bells", 0.5)#
 						bells -= 25
 					break
 				elif choice == "B":
@@ -416,26 +414,28 @@ def rand_encounters():
 				choice = input("--> ").upper()
 				time.sleep(1)
 				if choice == "A":
-				    if "scrap" in Loot_Bag and Loot_Bag["scrap"] >= 5:
-				        Loot_Bag["scrap"] -= 5
-				        if Loot_Bag["scrap"] < 1:
-				            del Loot_Bag["scrap"]
-				        say("Crusader: Thank you, kind traveler. Here, have my Holy Water.\n+1 full heal", 0.5)
-				        say(f"{Name}: This is a full hea-", 0.5)#
-				        say("Before you finish he runs off chasing a hobo for conversion.", 0.5)#
-				        if "full heal" in Bag:
-				            Bag["full heal"]["amount"] += 1
-				        else:
-				            Bag["full heal"] = {"type": "HP", "amount": 1}
-				    else:
-				        say("You don't have enough scrap!", 1)
-				        say("The crusader continues to rest, hurt.", 0.5)#
-				    break
+					if "scrap" in Loot_Bag and Loot_Bag["scrap"] >= 5:
+						Loot_Bag["scrap"] -= 5
+						if Loot_Bag["scrap"] < 1:
+							del Loot_Bag["scrap"]
+						say("Crusader: Thank you, kind traveler. Here, have my Holy Water.\n+1 full heal", 0.5)
+						say(f"{Name}: This is a full hea-", 0.5)#
+						say("Before you finish he runs off chasing a hobo for conversion.", 0.5)#
+						if bag_check() == 10:
+								say("You dropped the full heal",.5)
+						if "full heal" in Bag:
+							Bag["full heal"]["amount"] += 1
+						else:
+							Bag["full heal"] = {"type": "HP", "amount": 1}
+					else:
+						say("You don't have enough scrap!", 1)
+						say("The crusader continues to rest, hurt.", 0.5)#
+					break
 				elif choice == "B":
-				    say("You let him be and continue exploring.", 0.5)
-				    break
+					say("You let him be and continue exploring.", 0.5)
+					break
 				else:
-				    say("Invalid input! Please enter A or B.", 0.5)
+					say("Invalid input! Please enter A or B.", 0.5)
 				
 		elif location == "farm":
 			say("A pale warrior is holding an empty heineken near the crops. he seems dissapointed.", 0.5)#
@@ -465,77 +465,84 @@ def rand_encounters():
 					say("Invalid input! Please enter A or B.", 0.5)
 
 def shop():
+	bulk=0
 	def buy():
+		nonlocal bulk
 		global bells, max_Space
-		bulk=0
 		while True:
-			say(f"\nbells: {bells}\n--------SHOP--------", 0.5)
+			say(f"\nBells: {bells}\n--------SHOP--------", 0.5)
 			print("[A] Apple - 15 bells\n"  
 				+ "[B] Energy drink - 15 bells\n"  
 				+ "[C] Baby formula - 25 bells\n"  
 				+ "[D] Full heal - 50 bells\n"  
 				+ "[E] Heineken - 100 bells (ON SALE!!)\n"  
 				+ "[X] Exit")
-
+	
 			items = {
 				"A": ("apple", 15),
 				"B": ("energy drink", 15),
 				"C": ("baby formula", 25),
 				"D": ("full heal", 50),
 				"E": ("heineken", 100)
-				}
-
+			}
+	
 			choice = input("-->  ").upper()
 			if choice == "X":
 				return  # Exit buy menu
-
+	
 			if choice in items:
 				item, cost = items[choice]
-				if item in Bag:
-					if bag_check() >= max_Space:
-					say("You have no more space in your bag", 0.5)
-					continue
-				else:
+	
+				# If item is in Loot_Bag, just add it and exit
+				if item not in Consumable_info:
 					if item in Loot_Bag:
-						say(f"Tom Nook: I'm afraid I have no more {item} in stock", 0.5)
+						say("Tom Nook: Im afraid we dont have that in stock anymore",.5)
 					else:
-						bells-=cost
-						Loot_Bag[item]=1
-						say(f"You received... {item}?")
-					
-
-				while True:
-					try:
-						bulk = int(input("How many will you buy?\n"))
-						if bulk == 0:
-							say("You decided to not buy the item", 0.5)
-							return
-						if bag_check() + bulk > max_Space:
-							rem_spaces = max_Space - bag_check()
-							say(f"You only have {rem_spaces} spaces left in your bag", 0.5)
-						else:
-							break
-					except ValueError:
-						say("Invalid input! Enter a number.", 0.5)
-
-				total_price = cost * bulk
-				if bells >= total_price:
-					bells -= total_price
-					if item in Consumable_info:
-						if item in Bag:
-							Bag[item]["amount"] += bulk
-						else:
-							if item =="full heal":
-								Bag[item]={"type": Consumable_info[item]["type"], "amount": bulk}
-							else:
-								Bag[item]={"type":Consumable_info[item]["type"], "amount": bulk, "effect": Consumable_info[item]["restoration"]}
-					say(f"You received {bulk} {item}(s)!", 0.5)
+						say(f"You received... {item}?", 0.5)
+						bells -= cost
+						Loot_Bag[item] = 1
+					continue  # Go back to shop menu
+	
+				# Check if it's a consumable and if there's enough bag space
 				else:
-					say("Not enough bells!", 0.5)
-			else:
-				say("Invalid input, try again.", 0.5)
-
+					if bag_check() >= max_Space:
+						say("You have no more space in your bag", 0.5)
+						continue
+	
+					# Ask for bulk purchase amount
+					while True:
+						try:
+							say("0 = exit",.5)
+							bulk = int(input("How many will you buy?\n"))
+							if bulk == 0:
+								say("You decided to not buy the item", 0.5)
+								break
+							if bag_check() + bulk > max_Space:
+								rem_spaces = max_Space - bag_check()
+								say(f"You only have {rem_spaces} spaces left in your bag", 0.5)
+							else:
+								break
+						except ValueError:
+							say("Invalid input! Enter a number.", 0.5)
+	
+					total_price = cost * bulk
+					if bells >= total_price:
+						bells -= total_price
+						if item in Bag:
+							if item =="full heal":
+								Bag[item]["amount"] += bulk
+							else:
+								Bag[item] = {"type": Consumable_info[item]["type"], "amount": bulk}
+						else:
+							Bag[item] = {"type": Consumable_info[item]["type"],"amount": bulk,"effect": Consumable_info[item]["restoration"]}
+						say(f"You received {bulk} {item}(s)!", 0.5)
+					else:
+						say("Not enough bells!", 0.5)
 	def sell():
+		nonlocal bulk
+		if bag_check() == 0:
+			say("You have nothing to sell",.5)
+			return
 		global bells
 		while True:
 			say(f"\nbells: {bells}\n--------SHOP--------", 0.5)
@@ -549,21 +556,21 @@ def shop():
 				if sell_choice in Bag:
 					while True:
 						try:
+							say("0 = exit",.5)
 							bulk = int(input("How many will you sell?\n"))
 							if bulk > Bag[sell_choice]["amount"]:
 								say(f"You only have {Bag[sell_choice]['amount']} {sell_choice}(s)", 0.5)
 							else:
+								say(f"sold {bulk} {sell_choice}\n+{Consumable_info[sell_choice]['sell price']* bulk} bells", 0.5)
+								bells += Consumable_info[sell_choice]["sell price"]* bulk
+								Bag[sell_choice]["amount"] -= bulk
+								if Bag[sell_choice]["amount"] == 0:
+									del Bag[sell_choice]
 								break
 						except ValueError:
 							say("Invalid input! Enter a number.", 0.5)
-						say(f"sold {bulk} {sell_choice}", 0.5)
-						bells += Consumable_info[sell_choice]["sell price"]* bulk
-						Bag[sell_choice]["amount"] -= bulk
-						if Bag[sell_choice]["amount"] == 0:
-							del Bag[sell_choice]
 					else:
 						say("you don't have that item", 0.5)
-
 	while True:
 		say("\nTom Nook: Welcome to my shop!", 0.5)
 		print("[A] buy items")
@@ -721,7 +728,6 @@ def fighting():
 		say("Obtained sword! \n+5 DMG!", 0.5)
 		Player_Stats["DMG"] += 5
 		tutorial = False
-		wait(3)
 		return
 	
 	def drop_loot():
@@ -956,7 +962,7 @@ def fighting():
 		elif option == "D":
 			say("You try to run away...", 0.5)
 			wait(1.5)
-			if random.randint(1, 5) == 1:
+			if random.randint(1, 3) == 1:
 				say("You ran away!", 0.5)
 				return
 			else:
@@ -1028,7 +1034,7 @@ def gameplay():
 					say(f"You go to the {location}", 0.5)
 				break
 			else:
-				say("Invalid option!")
+				say("Invalid option!",.5)
 
 	while True:
 		say(f"\nYou are at the {location}", 0.5)
@@ -1128,8 +1134,8 @@ def gameplay():
 				else:
 					while True:
 						say("\nCrush: Do you have chocolates for me?", 0.5)
-						print("[A] 'Sure!'"
-							+ "[B] 'Where do I find chocolates?'"
+						print("[A] 'Sure!'\n"
+							+ "[B] 'Where do I find chocolates?'\n"
 							+ "[C] 'Nah'", 1)
 						dialogue_choice = input("--> ").upper()
 						if dialogue_choice == "A":
